@@ -13,6 +13,8 @@ if [ -e /usr/hdp/current/spark ]; then
     exit 0
 fi
 
+ echo "installing Spark..."
+
 # Add HADOOP environment variable into machine level configuration.
 echo "HADOOP_CONF_DIR=/etc/hadoop/conf" | sudo tee -a /etc/environment
 echo "YARN_CONF_DIR=/etc/hadoop/conf" | sudo tee -a /etc/environment
@@ -26,15 +28,19 @@ echo "export PATH=$PATH:/usr/hdp/current/spark/bin" | sudo tee -a /etc/profile
 echo "export PATH=$PATH:/usr/hdp/current/spark/bin" | sudo tee -a /root/.profile
 
 # Download Spark binary to temporary location.
+echo "Downloading http://d3kbcqa49mib13.cloudfront.net/spark-1.6.0-bin-hadoop2.6.tgz"
+echo "to /tmp/spark-1.6.0-bin-hadoop2.6.tgz"
 download_file http://d3kbcqa49mib13.cloudfront.net/spark-1.6.0-bin-hadoop2.6.tgz /tmp/spark-1.6.0-bin-hadoop2.6.tgz
-
+echo "file downloaded..."
 # Untar the Spark binary and move it to proper location.
+echo "untar to /usr/hdp/current/spark-1.6.0-bin-hadoop2.6"
 untar_file /tmp/spark-1.6.0-bin-hadoop2.6.tgz /usr/hdp/current
+echo "renaming to /usr/hdp/current/spark"
 mv /usr/hdp/current/spark-1.6.0-bin-hadoop2.6 /usr/hdp/current/spark
 
 # Remove the temporary file downloaded.
-rm -f /tmp/spark-1.6.0-bin-hadoop2.6.tgz
-
+#rm -f /tmp/spark-1.6.0-bin-hadoop2.6.tgz
+echo "we do not remove targz file for now"
 # Update/link files/variables necessary to make Spark work on HDInsight.
 
 echo "SPARK_DIST_CLASSPATH=$(hadoop classpath)" | sudo tee -a /etc/environment
@@ -42,10 +48,13 @@ ln -s /etc/hive/conf/hive-site.xml /usr/hdp/current/spark/conf
 
 #Determine Hortonworks Data Platform version
 HDP_VERSION=`ls /usr/hdp/ -I current`
-
+echo "Hortonworks Data Platform version est : $HDP_VERSION"
 #Assign java options to support Spark
 SparkDriverJavaOpts="spark.driver.extraJavaOptions -Dhdp.version=$HDP_VERSION"
 SparkYarnJavaOpts="spark.yarn.am.extraJavaOptions -Dhdp.version=$HDP_VERSION"
+echo "options:"
+echo "SparkDriverJavaOpts => $SparkDriverJavaOpts"
+echo "SparkYarnJavaOpts => SparkYarnJavaOpts"
 
 #Create file and update with default values
 SparkDefaults="/tmp/spark-defaults.conf"
