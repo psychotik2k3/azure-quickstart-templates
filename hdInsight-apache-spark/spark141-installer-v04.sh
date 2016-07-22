@@ -26,15 +26,17 @@ echo "export PATH=$PATH:/usr/hdp/current/spark/bin" | sudo tee -a /etc/profile
 echo "export PATH=$PATH:/usr/hdp/current/spark/bin" | sudo tee -a /root/.profile
 
 # Download Spark binary to temporary location.
+echo "start downloading http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz"
 download_file http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz /tmp/spark-1.4.1-bin-hadoop2.6.tgz
-
+echo "File downloaded to /tmp/spark-1.4.1-bin-hadoop2.6.tgz"
 # Untar the Spark binary and move it to proper location.
 untar_file /tmp/spark-1.4.1-bin-hadoop2.6.tgz /usr/hdp/current
+echo "untared to /usr/hdp/current/spark-1.4.1-bin-hadoop2.6"
 mv /usr/hdp/current/spark-1.4.1-bin-hadoop2.6 /usr/hdp/current/spark
-
+echo "renamed into /usr/hdp/current/spark"
 # Remove the temporary file downloaded.
-rm -f /tmp/spark-1.4.1-bin-hadoop2.6.tgz
-
+#rm -f /tmp/spark-1.4.1-bin-hadoop2.6.tgz
+echo "tgz file not removed on purpose"
 # Update/link files/variables necessary to make Spark work on HDInsight.
 
 echo "SPARK_DIST_CLASSPATH=$(hadoop classpath)" | sudo tee -a /etc/environment
@@ -42,7 +44,7 @@ ln -s /etc/hive/conf/hive-site.xml /usr/hdp/current/spark/conf
 
 #Determine Hortonworks Data Platform version
 HDP_VERSION=`ls /usr/hdp/ -I current`
-
+echo "Hortonworks Data Platform version: $HDP_VERSION"
 #Assign java options to support Spark
 SparkDriverJavaOpts="spark.driver.extraJavaOptions -Dhdp.version=$HDP_VERSION"
 SparkYarnJavaOpts="spark.yarn.am.extraJavaOptions -Dhdp.version=$HDP_VERSION"
