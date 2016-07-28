@@ -1,5 +1,9 @@
 # Spark & Cassandra on CentOS 7.x
 
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fspark-and-cassandra-on-centos%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
 This project configures a Spark cluster (1 master and n-slave nodes) and a single node Cassandra on Azure using CentOS 7.x.  The base image starts with CentOS 7.1 and it is updated to the latest version as part of the provisioning steps.
 
 Please note that [Azure Resource Manager][3] is used to provision the environment.
