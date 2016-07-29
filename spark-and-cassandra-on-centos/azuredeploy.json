@@ -139,7 +139,7 @@
 
     "apiVersion": "2015-06-15",
 
-    "artifactsLocation": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/spark-and-cassandra-on-centos/CustomScripts",
+    "artifactsLocation": "https://raw.githubusercontent.com/psychotik2k3/azure-quickstart-templates/master/spark-and-cassandra-on-centos/CustomScripts",
     "artifactsLocationSasToken":  "?key=change_me",
 
     "vnetSparkPrefix": "10.0.0.0/16",
@@ -528,7 +528,7 @@
         "ipConfigurations": [
           {
             "name": "ipconfig1",
-            "properties": {
+            "properties": {scriptActions
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "[variables('nicCassandraNodeIP')]",
               "subnet": {
